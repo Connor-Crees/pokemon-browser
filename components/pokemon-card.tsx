@@ -1,3 +1,5 @@
+"use client";
+
 import {
     Card,
     CardContent,
@@ -7,23 +9,31 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import Link from "next/link"
+import { Pokemon } from "@/lib/pokemonInterfaces";
+import { PokemonCardType } from "./pokemon-card-types";
+import { usePathname, useSearchParams} from "next/navigation";
 
-interface PokemonCardProps {
-    name: string
-}
+export function PokemonCard({name, id, types} : Pokemon) {
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const currentPage = Number(searchParams.get("page")) || 0;
 
-export function PokemonCard({name} : PokemonCardProps) {
-
+    const createPageURL = (pagenumber: number | string) => {
+        const params = new URLSearchParams(searchParams);
+        params.set("page", pagenumber.toString());
+        params.set("pokemon", name);
+        return(`${pathname}details?${params.toString()}`);
+    }
     return (
-        <div className="flex width-[266px] height-[391px]">
-            <Link href={name} key={name}>
+        <div>
+            <Link href={createPageURL(currentPage)} key={name}>
                 <Card>
                     <CardHeader>
                         <CardTitle>{name.charAt(0).toUpperCase() + name.slice(1)}</CardTitle>
-                        <CardDescription>Card Description</CardDescription>
+                        <CardDescription>{"#" + String(id).padStart(4, "0")}</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <p>Card Content</p>
+                        <PokemonCardType {...types}/>
                     </CardContent>
                 </Card>
             </Link>
