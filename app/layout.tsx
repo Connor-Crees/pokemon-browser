@@ -19,10 +19,7 @@ export default function RootLayout({
       >
         {children}
       </body>
-      <footer className="flex flex-col p-8 justify-center items-center">
-        
-        <div>Thank you for using Pokémon Browser!</div>
-      </footer>
+      
     </html>
   );
 }

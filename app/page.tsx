@@ -1,8 +1,23 @@
 import { PokemonList } from '@/components/pokemon-list';
-import { getPokemonList } from '@/lib/pokemonAPI';
+import PokemonPagination from '@/components/pokemon-pagination';
 
-export default async function Home() {
-  const pokemonList = await getPokemonList(0);
+type Pokemon = {
+    name: string,
+    url: string
+}
+interface PokemonListProps {
+    next: string,
+    previous: string,
+    pokemonList: Pokemon[]
+}
+
+export default async function Home(props: {
+    searchParams?: Promise<{
+      page?: string;
+    }>;
+}) {
+  const searchParams = await props.searchParams;
+  const pageNum = Number(searchParams?.page) || 0;
 
   return (
     <div className={`flex flex-col gap-[48px]`}>
@@ -24,13 +39,19 @@ export default async function Home() {
         </div>
 
         {/* Pokemon list */}
-        <PokemonList pokemonList={pokemonList}/>
+        <PokemonList pageNum={pageNum}/>
 
+        {/* Pagination */}
+        <PokemonPagination />
         
       </div>
 
       {/* seperator */}
       <div className="flex border border-[#E4E4E7] gap-[10px]" />
+
+      <footer className="flex flex-col p-8 justify-center items-center">
+        <div>Thank you for using Pokémon Browser!</div>
+      </footer>
 
     </div>
     

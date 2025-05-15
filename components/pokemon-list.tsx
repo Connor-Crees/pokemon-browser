@@ -1,23 +1,23 @@
-'use client'
-
-import { useState } from "react";
 import { PokemonCard } from "./pokemon-card";
+import { getPokemonList } from '@/lib/pokemonAPI';
 
-interface PokemonGridProps {
-    pokemonList: any;
+type Pokemon = {
+    name: string,
+    url: string
 }
 
-export function PokemonList({pokemonList} : PokemonGridProps) {
-
-    console.log(pokemonList);
-
-    return(
-        <div className="flex justify-between flex-wrap gap-8">
-            {pokemonList.map((pokemon : any) => {
-                return(
-                    <PokemonCard name={pokemon.name} key={pokemon.name}/>
-                )
-            })}
+export async function PokemonList({ pageNum }: { pageNum: number }) {
+    const pokemonList = await getPokemonList(pageNum);
+    return (
+        <div>
+            <div className="flex justify-between flex-wrap gap-8">
+                {pokemonList.map((pokemon: Pokemon) => {
+                    return (
+                        <PokemonCard name={pokemon.name} key={pokemon.name} />
+                    )
+                })}
+            </div>
         </div>
+
     )
 }
