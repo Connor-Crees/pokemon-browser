@@ -1,5 +1,7 @@
 "use client";
 
+import Image from 'next/image';
+
 import {
     Card,
     CardContent,
@@ -13,7 +15,7 @@ import { Pokemon } from "@/lib/pokemonInterfaces";
 import { PokemonCardType } from "./pokemon-card-types";
 import { usePathname, useSearchParams} from "next/navigation";
 
-export function PokemonCard({name, id, types} : Pokemon) {
+export function PokemonCard({name, id, types, image} : Pokemon) {
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const currentPage = Number(searchParams.get("page")) || 0;
@@ -28,6 +30,9 @@ export function PokemonCard({name, id, types} : Pokemon) {
         <div>
             <Link href={createPageURL(currentPage)} key={name}>
                 <Card>
+                    <div className='flex justify-center items-center bg-[#FAFAFA] mt-[-24px] rounded-t-xl'>
+                        <Image src={image} alt={`Image of ${name}`} width={"200"} height={"200"} />
+                    </div>
                     <CardHeader>
                         <CardTitle>{name.charAt(0).toUpperCase() + name.slice(1)}</CardTitle>
                         <CardDescription>{"#" + String(id).padStart(4, "0")}</CardDescription>

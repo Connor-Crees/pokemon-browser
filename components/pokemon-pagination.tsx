@@ -25,10 +25,15 @@ export default function PokemonPagination() {
             <Pagination>
                 <PaginationContent>
                     <PaginationItem>
-                        <PaginationPrevious href={createPageURL(currentPage - 1)}/>
+                        <PaginationPrevious 
+                            href={createPageURL(currentPage - 1)}
+                            aria-disabled={currentPage <= 0}
+                            tabIndex={currentPage <= 0 ? -1 : undefined}
+                            className={currentPage <= 0 ? "pointer-events-none opacity-50" : undefined}
+                        />
                     </PaginationItem>
                     <PaginationItem>
-                        <PaginationNext href={createPageURL(currentPage + 1)}/>
+                        <PaginationNext href={createPageURL(currentPage + 1)} />
                     </PaginationItem>
                 </PaginationContent>
             </Pagination>

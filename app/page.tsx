@@ -4,20 +4,10 @@ import PokemonPagination from '@/components/pokemon-pagination';
 import { Suspense } from 'react';
 import { Separator } from '@/components/ui/separator';
 
-type Pokemon = {
-    name: string,
-    url: string
-}
-interface PokemonListProps {
-    next: string,
-    previous: string,
-    pokemonList: Pokemon[]
-}
-
 export default async function Home(props: {
-    searchParams?: Promise<{
-      page?: string;
-    }>;
+  searchParams?: Promise<{
+    page?: string;
+  }>;
 }) {
   const searchParams = await props.searchParams;
   const pageNum = Number(searchParams?.page) || 0;
@@ -42,12 +32,13 @@ export default async function Home(props: {
 
         {/* Pokemon list */}
         <Suspense key={pageNum} fallback={<Loading />}>
-          <PokemonList pageNum={pageNum}/>
+          <PokemonList pageNum={pageNum} />
         </Suspense>
+
 
         {/* Pagination */}
         <PokemonPagination />
-        
+
       </div>
 
       <Separator />
@@ -57,6 +48,6 @@ export default async function Home(props: {
       </footer>
 
     </div>
-    
+
   );
 }

@@ -1,12 +1,142 @@
-import { GetPokemonDetails } from "@/lib/pokemonAPI";
+import { GetPokemonDetails, GetPokemonSpecies, GetPokemonWeaknesses } from "@/lib/pokemonAPI";
+import Image from "next/image";
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card"
+import { Type } from "@/lib/pokemonInterfaces";
+import { PokemonDetailsType } from "./pokemon-card-types";
 
-export async function PokemonDetails({name}: {name : string}){
-    console.log("name: " + name)
-    const data = await GetPokemonDetails(name);
+export async function PokemonDetails({ name }: { name: string }) {
+    const pokemonData = await GetPokemonDetails(name);
+    const speciesData = await GetPokemonSpecies(pokemonData.species.url);
 
-    return(
+    const GetPokemonGender = (genderRate: number) =>{
+        if(genderRate == -1){
+            return("Genderless");
+        }
+        else if(genderRate == 0){
+            return("Male");
+        }
+        else if(genderRate == 8){
+            return("Female");
+        }
+        else{
+            return("Male / Female")
+        }
+    }
+    
+    const pokemonTypes: string[] = [];
+    const typeURLs: string[] = [];
+    pokemonData.types.forEach((t: Type) => {
+        pokemonTypes.push(t.type.name);
+        typeURLs.push(t.type.url);
+    });
+    const pokemonWeaknesses = await GetPokemonWeaknesses(typeURLs);
+    console.log("weaknesses: ", pokemonWeaknesses);
+
+    return (
         <div>
-            {data.name}
+            {/* Info bar */}
+            <Card className="p-4 bg-[#F5F4F4]">
+                <CardContent className="flex gap-4">
+                    {/* pokeball */}
+                    <div className='flex justify-center items-center min-w-[70px] max-w-[70px] min-h-[70px] max-h-[70px] rounded-full bg-[#FAFAFA]'>
+                        <Image
+                        src="/cherish-ball.png"
+                        alt="image of cherish ball pokeball"
+                        width="70"
+                        height="70"
+                        />
+                    </div>
+                    
+
+                    {/* flavour text */}
+                    <div className="text-[20px] font-[400]">
+                        {speciesData.flavor_text_entries[0].flavor_text}
+                    </div>
+                </CardContent>
+            </Card>
+
+            {/* stats */}
+            <div className="grid grid-cols-3 grid-rows-2 gap-4 pt-8">
+                {/* left info sidebar */}
+                <Card className="row-span-2">
+                    <CardHeader>
+                        <CardTitle>Height</CardTitle>
+                        <CardDescription>{`${(pokemonData.height/10).toString()}m`}</CardDescription>
+                    </CardHeader>
+
+                    <CardHeader>
+                        <CardTitle>Category</CardTitle>
+                        <CardDescription>{speciesData.genera[7].genus.slice(0,-8)}</CardDescription>
+                    </CardHeader>
+
+                    <CardHeader>
+                        <CardTitle>Weight</CardTitle>
+                        <CardDescription>{`${(pokemonData.weight/10).toString()} kg`}</CardDescription>
+                    </CardHeader>
+
+                    <CardHeader>
+                        <CardTitle>Gender</CardTitle>
+                        <CardDescription>{GetPokemonGender(speciesData.gender_rate)}</CardDescription>
+                    </CardHeader>
+                </Card>
+
+                {/* type and weakness */}
+
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Type</CardTitle>
+                        <CardDescription>
+                            <PokemonDetailsType {...pokemonTypes} />
+                        </CardDescription>
+                    </CardHeader>
+                    <CardHeader>
+                        <CardTitle>Weaknesses</CardTitle>
+                        <CardDescription>
+                            <PokemonDetailsType {...pokemonWeaknesses} />
+                        </CardDescription>
+                    </CardHeader>
+                </Card>
+
+
+                {/* Ability */}
+
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Card Title</CardTitle>
+                        <CardDescription>Card Description</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <p>Card Content</p>
+                    </CardContent>
+                    <CardFooter>
+                        <p>Card Footer</p>
+                    </CardFooter>
+                </Card>
+
+
+                {/* stats chart */}
+
+                <Card className="col-span-2">
+                    <CardHeader>
+                        <CardTitle>Card Title</CardTitle>
+                        <CardDescription>Card Description</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <p>Card Content</p>
+                    </CardContent>
+                    <CardFooter>
+                        <p>Card Footer</p>
+                    </CardFooter>
+                </Card>
+
+            </div>
         </div>
     )
 }

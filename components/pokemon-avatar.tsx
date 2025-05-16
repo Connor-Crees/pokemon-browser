@@ -1,14 +1,14 @@
 import { GetPokemonAvatarDetails } from '@/lib/pokemonAPI';
+import Image from 'next/image';
 
 export async function PokemonAvatar({name}: {name : string}){
-    console.log("name: " + name)
     const [id, avatarURL] = await GetPokemonAvatarDetails(name);
 
     return(
         <div className='flex flex-col items-center gap-3'>
             {/* Pokemon Avatar */}
             <div className='flex justify-center items-center w-[208px] h-[208px] rounded-full bg-[#FAFAFA]'>
-                <img src={avatarURL} alt={`Image of ${name}`} width={"100%"} height={"100%"}></img>
+                <Image src={avatarURL} alt={`Image of ${name}`} width={"200"} height={"200"} />
             </div>
 
             {/* Name and number */}
