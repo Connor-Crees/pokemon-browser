@@ -1,4 +1,4 @@
-import { GetPokemonDetails, GetPokemonSpecies, GetPokemonWeaknesses } from "@/lib/pokemonAPI";
+import { GetPokemonDetails, GetPokemonSpecies, GetPokemonWeaknesses, GetPokemonAbility } from "@/lib/pokemonAPI";
 import Image from "next/image";
 import {
     Card,
@@ -10,10 +10,13 @@ import {
 } from "@/components/ui/card"
 import { Type } from "@/lib/pokemonInterfaces";
 import { PokemonDetailsType } from "./pokemon-card-types";
+import { PokemonStats } from "./pokemon-stats";
 
 export async function PokemonDetails({ name }: { name: string }) {
     const pokemonData = await GetPokemonDetails(name);
     const speciesData = await GetPokemonSpecies(pokemonData.species.url);
+    const abilityName = pokemonData.abilities[0].ability.name.charAt(0).toUpperCase() + pokemonData.abilities[0].ability.name.slice(1)
+    const abilityDesc = await GetPokemonAbility(pokemonData.abilities[0].ability.url);
 
     const GetPokemonGender = (genderRate: number) =>{
         if(genderRate == -1){
@@ -109,31 +112,19 @@ export async function PokemonDetails({ name }: { name: string }) {
 
                 <Card>
                     <CardHeader>
-                        <CardTitle>Card Title</CardTitle>
-                        <CardDescription>Card Description</CardDescription>
+                        <CardTitle>Ability</CardTitle>
+                        <CardDescription>{abilityName}</CardDescription>
+                        <CardDescription className="italic">{abilityDesc}</CardDescription>
                     </CardHeader>
-                    <CardContent>
-                        <p>Card Content</p>
-                    </CardContent>
-                    <CardFooter>
-                        <p>Card Footer</p>
-                    </CardFooter>
                 </Card>
 
 
                 {/* stats chart */}
 
                 <Card className="col-span-2">
-                    <CardHeader>
-                        <CardTitle>Card Title</CardTitle>
-                        <CardDescription>Card Description</CardDescription>
-                    </CardHeader>
                     <CardContent>
-                        <p>Card Content</p>
+                        <PokemonStats {...pokemonData.stats} />
                     </CardContent>
-                    <CardFooter>
-                        <p>Card Footer</p>
-                    </CardFooter>
                 </Card>
 
             </div>

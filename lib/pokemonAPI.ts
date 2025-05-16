@@ -92,3 +92,9 @@ export async function GetPokemonWeaknesses(urls: (string[])){
 
     return [...new Set(weaknesses)];
 }
+
+export async function GetPokemonAbility(url: string){
+    const response = await fetch(url);
+    const data = await response.json();
+    return data.flavor_text_entries[0].flavor_text;
+}
