@@ -3,14 +3,17 @@ import { PokemonList } from '@/components/pokemon-list';
 import PokemonPagination from '@/components/pokemon-pagination';
 import { Suspense } from 'react';
 import { Separator } from '@/components/ui/separator';
+import { PokemonSearch } from '@/components/pokemon-search';
 
 export default async function Home(props: {
   searchParams?: Promise<{
     page?: string;
+    search?: string;
   }>;
 }) {
   const searchParams = await props.searchParams;
   const pageNum = Number(searchParams?.page) || 0;
+  const search = searchParams?.search || "";
 
   return (
     <div className={`flex flex-col gap-[48px]`}>
@@ -25,14 +28,11 @@ export default async function Home(props: {
       {/* body */}
       <div className="flex flex-col pl-[140px] pr-[140px] gap-[48px]">
         {/* sub-heading and search */}
-        <div className="flex justify-between">
-          <h2 className="flex items-center text-[30px] tracking-[-0.025em]">Explore Pokémon</h2>
-          <h2 className="flex items-center text-[30px] tracking-[-0.025em]">Search</h2>
-        </div>
+        <PokemonSearch />
 
         {/* Pokemon list */}
         <Suspense key={pageNum} fallback={<Loading />}>
-          <PokemonList pageNum={pageNum} />
+          <PokemonList pageNum={pageNum} search={search} />
         </Suspense>
 
 

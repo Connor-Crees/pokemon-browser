@@ -2,7 +2,7 @@ import { PokemonCard } from "./pokemon-card";
 import { GetPokemonList, GetPokemonCardDetails } from '@/lib/pokemonAPI';
 import { Pokemon } from "@/lib/pokemonInterfaces";
 
-export async function PokemonList({ pageNum }: { pageNum: number }) {
+export async function PokemonList({ pageNum, search }: { pageNum: number, search: string }) {
     const pokemonCardList = [] as Pokemon[];
     const pokemonList = await GetPokemonList(pageNum);
     for(const pokemon of pokemonList){
