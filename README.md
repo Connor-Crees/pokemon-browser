@@ -29,7 +29,7 @@ Then, open [http://localhost:3000](http://localhost:3000) with your browser to s
 
 * Some pokemon (such as koraidon-limited-build) are missing an image and some details.
     * Images only show up once on the page, so the method I've used I think is an ok solution for them. (See components/pokemon-card.tsx line 34 and components/pokemon-avatar.tsx line 11)
-    * The specific missing detail is a Category from speciesData.genera[7], which I have omitted on line 79 of components/pokemon-details.tsx however, if other details are missing, this page will not load.
+    * The specific missing detail is a Category from speciesData.genera[7], which I have omitted on line 81 of components/pokemon-details.tsx however, if other details are missing, this page will not load.
     * To fix this, I could go through each detail on the details page and add a similar expression to account for missing data, but this would not be a maintainable solution in the long run if I wanted to add more details/stats to be shown.
     * A better solution might be to write some sort of generic wrapper function that all data entries must pass through to account for missing data.
 
