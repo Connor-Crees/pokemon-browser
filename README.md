@@ -18,7 +18,7 @@ Then, open [http://localhost:3000](http://localhost:3000) with your browser to s
 
 * Pokemon List layout doesn't quite match the figma.
 
-The "Pokemon List" in the figma design has a layout of "Justify: space-between", however when a pokemon is searched for this then appears hugging the left-hand side. In my application, the layout remains "Justify: space-between", so the pokemon searched for appears hugging the centre of the page.
+* * The "Pokemon List" in the figma design has a layout of "Justify: space-between", however when a pokemon is searched for this then appears hugging the left-hand side. In my application, the layout remains "Justify: space-between", so the pokemon searched for appears hugging the centre of the page.
 
 * The button colours for the pagination do not match the figma design. 
 
