@@ -13,6 +13,7 @@ bun dev
 ```
 
 Then, open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3000 is the default port, this may differ on your machine if the port 3000 is already in-use/forwarded.
 
 ## Differences/limitations of the application
 
