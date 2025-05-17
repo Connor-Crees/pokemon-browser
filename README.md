@@ -33,7 +33,9 @@ So I took one from here: https://github.com/shadcn-ui/ui/discussions/1694#discus
 * Some pokemon (such as koraidon-limited-build) are missing an image and some details.
 
 Images only show up once on the page, so the method I've used I think is an ok solution for them. (See components/pokemon-card.tsx line 34 and components/pokemon-avatar.tsx line 11)
+
 The specific missing detail is a Category from speciesData.genera[7], which I have omitted on line 79 of components/pokemon-details.tsx however, if other details are missing, this page will not load.
+
 To fix this, I could go through each detail on the details page and add a similar expression to account for missing data, but this would not be a maintainable solution in the long run if I wanted to add more details/stats to be shown.
 A better solution might be to write some sort of generic wrapper function that all data entries must pass through to account for missing data.
 
@@ -44,9 +46,11 @@ This is from me assuming that the first entry in the pokeAPI will be the English
 * The search function only shows an exact match to a single pokemon name. 
 
 It's not clear from the figma what the expected result here is.
+
 i.e. If I search for "saur" should Bulbasaur, Ivysuar and Venusaur all show up since then end with "saur". With a sophisticated search function this is what I'd assume, however I do not have time to implement this for this project, so a simple exact-name search is all I've done.
 
 * Tailwind best practices
 
 This was my first time using tailwind rather than a separate raw css file, and I struggled with how similar but different all the classes are.
+
 I did not order any of the className classes, but simply left them in the order in which I added them. I assume there is some standard for this, but I did not find one to follow.
