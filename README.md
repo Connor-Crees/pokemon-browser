@@ -12,7 +12,7 @@ pnpm dev
 bun dev
 ```
 
-The, open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then, open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Differences/limitations of the application
 
