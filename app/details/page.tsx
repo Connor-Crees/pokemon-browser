@@ -27,7 +27,7 @@ export default async function Page(props: {
                     {/* Top of Profile Section */}
                     <div>
                         {/* Top of Profile BG */}
-                        <div className="bg-[#18181B33] h-[168px] w-full mb-[-50px]"></div>
+                        <div className="bg-[#18181B33] h-[168px] w-full mt-[-50px] mb-[-50px]"></div>
 
                         {/* Avatar, name and number */}
                         <div className="flex justify-center">

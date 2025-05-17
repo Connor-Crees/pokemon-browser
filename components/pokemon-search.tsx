@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { usePathname, useSearchParams} from "next/navigation";
 import { useState } from 'react';
 import Link from 'next/link';
-import { parseParameter } from 'next/dist/shared/lib/router/utils/route-regex';
 
 export function PokemonSearch() {
     const pathname = usePathname();
@@ -18,11 +17,11 @@ export function PokemonSearch() {
     if(search){
         exploreText = `Search Results for '${search.charAt(0).toUpperCase() + search.slice(1)}'`
     }
-    
 
     const createPageURL = (searchValue: string) => {
         const params = new URLSearchParams(searchParams);
         params.set("search", searchValue.toLowerCase());
+        params.set("page", "0");
         return(`${pathname}?${params.toString()}`);
     }
 

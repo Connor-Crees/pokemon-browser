@@ -31,7 +31,7 @@ export function PokemonCard({name, id, types, image} : Pokemon) {
             <Link href={createPageURL(currentPage)} key={name}>
                 <Card>
                     <div className='flex justify-center items-center bg-[#FAFAFA] mt-[-24px] rounded-t-xl'>
-                        <Image src={image} alt={`Image of ${name}`} width={"200"} height={"200"} />
+                        {image && <Image src={image} alt={`Image of ${name}`} width={"200"} height={"200"} />}
                     </div>
                     <CardHeader>
                         <CardTitle>{name.charAt(0).toUpperCase() + name.slice(1)}</CardTitle>

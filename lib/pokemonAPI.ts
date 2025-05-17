@@ -4,14 +4,21 @@ const pokemonAPI = "https://pokeapi.co/api/v2/";
 
 export async function GetPokemonList(pageNum : number){
     const numberOfPokemon = 12;
-    const response = await fetch(pokemonAPI + `pokemon/?limit=${numberOfPokemon}&offset=${pageNum*numberOfPokemon}`)
+    const response = await fetch(pokemonAPI + `pokemon/?limit=${numberOfPokemon}&offset=${pageNum*numberOfPokemon}`);
     const data = await response.json();
     return data.results;
+}
+
+export async function GetPokemonCount() {
+    const response = await fetch(pokemonAPI + `pokemon/`);
+    const data = await response.json();
+    return data.count;
 }
 
 export async function GetPokemonCardDetails(name: string){
     const response = await fetch(pokemonAPI + `pokemon/${name}`);
     const data = await response.json();
+    var image = data.sprites.front_default;
     return [name, data.id, data.types, data.sprites.front_default];
 }
 

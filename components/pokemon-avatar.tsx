@@ -8,7 +8,7 @@ export async function PokemonAvatar({name}: {name : string}){
         <div className='flex flex-col items-center gap-3'>
             {/* Pokemon Avatar */}
             <div className='flex justify-center items-center w-[208px] h-[208px] rounded-full bg-[#FAFAFA]'>
-                <Image src={avatarURL} alt={`Image of ${name}`} width={"200"} height={"200"} />
+                {avatarURL && <Image src={avatarURL} alt={`Image of ${name}`} width={"200"} height={"200"} />}
             </div>
 
             {/* Name and number */}

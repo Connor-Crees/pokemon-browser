@@ -1,4 +1,4 @@
-// taken from: https://github.com/shadcn-ui/ui/discussions/1694
+// taken from: https://github.com/shadcn-ui/ui/discussions/1694#discussioncomment-7851248
 
 import { cn } from '@/lib/utils'
 

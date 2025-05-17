@@ -15,6 +15,7 @@ import { PokemonStats } from "./pokemon-stats";
 export async function PokemonDetails({ name }: { name: string }) {
     const pokemonData = await GetPokemonDetails(name);
     const speciesData = await GetPokemonSpecies(pokemonData.species.url);
+    // Assumes that the first ability entry is the English one
     const abilityName = pokemonData.abilities[0].ability.name.charAt(0).toUpperCase() + pokemonData.abilities[0].ability.name.slice(1)
     const abilityDesc = await GetPokemonAbility(pokemonData.abilities[0].ability.url);
 
@@ -46,7 +47,7 @@ export async function PokemonDetails({ name }: { name: string }) {
         <div>
             {/* Info bar */}
             <Card className="p-4 bg-[#F5F4F4]">
-                <CardContent className="flex gap-4">
+                <CardContent className="flex items-center gap-4">
                     {/* pokeball */}
                     <div className='flex justify-center items-center min-w-[70px] max-w-[70px] min-h-[70px] max-h-[70px] rounded-full bg-[#FAFAFA]'>
                         <Image
@@ -60,6 +61,7 @@ export async function PokemonDetails({ name }: { name: string }) {
 
                     {/* flavour text */}
                     <div className="text-[20px] font-[400]">
+                        {/* Assumes that the first flavour text entry is the English one */}
                         {speciesData.flavor_text_entries[0].flavor_text}
                     </div>
                 </CardContent>
@@ -76,7 +78,7 @@ export async function PokemonDetails({ name }: { name: string }) {
 
                     <CardHeader>
                         <CardTitle>Category</CardTitle>
-                        <CardDescription>{speciesData.genera[7].genus.slice(0,-8)}</CardDescription>
+                        <CardDescription>{speciesData.genera[7] && speciesData.genera[7].genus.slice(0,-8)}</CardDescription>
                     </CardHeader>
 
                     <CardHeader>
