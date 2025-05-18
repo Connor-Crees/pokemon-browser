@@ -27,7 +27,7 @@ function PaginationContent({
   return (
     <ul
       data-slot="pagination-content"
-      className={cn("flex flex-row items-center gap-1", className)}
+      className={cn("flex flex-row items-center gap-4", className)}
       {...props}
     />
   )
@@ -55,7 +55,7 @@ function PaginationLink({
       data-active={isActive}
       className={cn(
         buttonVariants({
-          variant: isActive ? "outline" : "ghost",
+          variant: isActive ? "outline" : "default",
           size,
         }),
         className
@@ -76,8 +76,8 @@ function PaginationPrevious({
       className={cn("gap-1 px-2.5 sm:pl-2.5", className)}
       {...props}
     >
-      <ChevronLeftIcon />
-      <span className="hidden sm:block">Back</span>
+      {/* <ChevronLeftIcon /> */}
+      <span className="hidden sm:block">{"<- Back"}</span>
     </PaginationLink>
   )
 }
@@ -93,8 +93,8 @@ function PaginationNext({
       className={cn("gap-1 px-2.5 sm:pr-2.5", className)}
       {...props}
     >
-      <span className="hidden sm:block">Next</span>
-      <ChevronRightIcon />
+      <span className="hidden sm:block">{"Next ->"}</span>
+      {/* <ChevronRightIcon /> */}
     </PaginationLink>
   )
 }

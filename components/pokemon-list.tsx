@@ -19,7 +19,7 @@ export async function PokemonList({ pageNum, search }: { pageNum: number, search
         }
         return (
             <div>
-                <div className="flex justify-center flex-wrap gap-8">
+                <div className="flex justify-between flex-wrap gap-8">
                     {pokemonCardList.map((pokemon: Pokemon) => {
                         return (
                             <PokemonCard 

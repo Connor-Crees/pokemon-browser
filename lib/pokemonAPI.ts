@@ -65,10 +65,10 @@ export async function GetPokemonWeaknesses(urls: (string[])){
             pokemonInvulns.push(invuln.name);
         }
     }
-    console.log("pokemonWeaknesses: ", pokemonWeaknesses);
-    console.log("pokemonStrengths: ", pokemonStrengths);
-    console.log("pokemonInvulns: ", pokemonInvulns);
     
+    // Pokemon with multiple types can have overlapping strengths and weaknesses
+    // These strengths and weaknesses stack multiplicitavily:
+    // See https://pokemondb.net/type for details
     const mults: Weakness<number> = {}
     for(const weakness of pokemonWeaknesses){
         if(!mults[weakness]){
@@ -88,7 +88,6 @@ export async function GetPokemonWeaknesses(urls: (string[])){
             mults[invulns] = 0;
         }
     }
-    console.log("mults: ", mults);
 
     const weaknesses: (string)[] = [];
     for(const weakness of pokemonWeaknesses){

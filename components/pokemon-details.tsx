@@ -15,9 +15,20 @@ import { PokemonStats } from "./pokemon-stats";
 export async function PokemonDetails({ name }: { name: string }) {
     const pokemonData = await GetPokemonDetails(name);
     const speciesData = await GetPokemonSpecies(pokemonData.species.url);
-    // Assumes that the first ability entry is the English one
-    const abilityName = pokemonData.abilities[0].ability.name.charAt(0).toUpperCase() + pokemonData.abilities[0].ability.name.slice(1)
-    const abilityDesc = await GetPokemonAbility(pokemonData.abilities[0].ability.url);
+
+    // The first flavour text entry is the English one
+    const flavourText = (speciesData.flavor_text_entries[0]) ? speciesData.flavor_text_entries[0].flavor_text : "-";
+
+    // The first ability entry is the English one
+    const abilityName = (pokemonData.abilities[0]) ? pokemonData.abilities[0].ability.name.charAt(0).toUpperCase() + pokemonData.abilities[0].ability.name.slice(1) : "-";
+    const abilityDesc = (pokemonData.abilities[0]) ? await GetPokemonAbility(pokemonData.abilities[0].ability.url) : "-";
+
+    const height = (pokemonData.height) ? `${(pokemonData.height/10).toString()}m` : "-";
+
+    // The seventh ability entry is the English one
+    const category = (speciesData.genera[7]) ? speciesData.genera[7].genus.slice(0,-8) : "-";
+
+    const weight = (pokemonData.weight) ? `${(pokemonData.weight/10).toString()} kg` : "-";
 
     const GetPokemonGender = (genderRate: number) =>{
         if(genderRate == -1){
@@ -30,9 +41,10 @@ export async function PokemonDetails({ name }: { name: string }) {
             return("Female");
         }
         else{
-            return("Male / Female")
+            return("Male / Female");
         }
     }
+    const gender = (speciesData.gender_rate) ? GetPokemonGender(speciesData.gender_rate) : "-";
     
     const pokemonTypes: string[] = [];
     const typeURLs: string[] = [];
@@ -41,7 +53,8 @@ export async function PokemonDetails({ name }: { name: string }) {
         typeURLs.push(t.type.url);
     });
     const pokemonWeaknesses = await GetPokemonWeaknesses(typeURLs);
-    console.log("weaknesses: ", pokemonWeaknesses);
+
+    const stats = pokemonData.stats;
 
     return (
         <div>
@@ -61,8 +74,7 @@ export async function PokemonDetails({ name }: { name: string }) {
 
                     {/* flavour text */}
                     <div className="text-[20px] font-[400]">
-                        {/* Assumes that the first flavour text entry is the English one */}
-                        {speciesData.flavor_text_entries[0].flavor_text}
+                        {flavourText}
                     </div>
                 </CardContent>
             </Card>
@@ -73,27 +85,26 @@ export async function PokemonDetails({ name }: { name: string }) {
                 <Card className="row-span-2">
                     <CardHeader>
                         <CardTitle>Height</CardTitle>
-                        <CardDescription>{`${(pokemonData.height/10).toString()}m`}</CardDescription>
+                        <CardDescription>{height}</CardDescription>
                     </CardHeader>
 
                     <CardHeader>
                         <CardTitle>Category</CardTitle>
-                        <CardDescription>{speciesData.genera[7] && speciesData.genera[7].genus.slice(0,-8)}</CardDescription>
+                        <CardDescription>{category}</CardDescription>
                     </CardHeader>
 
                     <CardHeader>
                         <CardTitle>Weight</CardTitle>
-                        <CardDescription>{`${(pokemonData.weight/10).toString()} kg`}</CardDescription>
+                        <CardDescription>{weight}</CardDescription>
                     </CardHeader>
 
                     <CardHeader>
                         <CardTitle>Gender</CardTitle>
-                        <CardDescription>{GetPokemonGender(speciesData.gender_rate)}</CardDescription>
+                        <CardDescription>{gender}</CardDescription>
                     </CardHeader>
                 </Card>
 
                 {/* type and weakness */}
-
                 <Card>
                     <CardHeader>
                         <CardTitle>Type</CardTitle>
@@ -111,7 +122,6 @@ export async function PokemonDetails({ name }: { name: string }) {
 
 
                 {/* Ability */}
-
                 <Card>
                     <CardHeader>
                         <CardTitle>Ability</CardTitle>
@@ -122,10 +132,9 @@ export async function PokemonDetails({ name }: { name: string }) {
 
 
                 {/* stats chart */}
-
                 <Card className="col-span-2">
                     <CardContent>
-                        <PokemonStats {...pokemonData.stats} />
+                        <PokemonStats {...stats} />
                     </CardContent>
                 </Card>
 
